@@ -49,7 +49,8 @@ function ToDoComponent() {
         try {
             if (db) {
                 const tasksCollection = collection(db, 'tasks');
-                await addDoc(tasksCollection, { task });
+                const docRef = await addDoc(tasksCollection, { task }); // Capture the reference of the added document
+                setTasks(prevTasks => [...prevTasks, { id: docRef.id, task }]); // Update tasks state with the new task
                 setTask('');
             }
         } catch (error) {
